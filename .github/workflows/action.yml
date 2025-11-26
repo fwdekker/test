@@ -5,8 +5,6 @@ jobs:
     steps:
       - uses: vmactions/netbsd-vm@main
         with:
-          prepare: |
-            /usr/sbin/pkg_add curl
           run: |
             set -e
 
