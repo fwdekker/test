@@ -4,6 +4,7 @@ jobs:
     strategy:
       matrix:
         sync: ["no", "rsync", "sshfs", "scp"]
+      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - uses: vmactions/netbsd-vm@main
