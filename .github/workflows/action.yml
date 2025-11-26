@@ -8,6 +8,8 @@ jobs:
           run: |
             set -e
 
+            /usr/sbin/pkg_add curl
+
             printf "::group::Without buildinfo (works fine)\n"
             ls -lah
             touch ./contents
