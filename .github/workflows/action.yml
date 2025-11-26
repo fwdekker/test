@@ -13,6 +13,7 @@ jobs:
             set -e
 
             printf "::group::Without buildinfo (works fine)\n"
+            ls -lah
             touch ./contents
 
             /usr/sbin/pkg_create \
@@ -20,12 +21,14 @@ jobs:
               -d -"My description" \
               -f ./contents \
               my-package.tgz
-
+            ls -lah
+            
             rm ./contents ./my-package.tgz
             printf "::endgroup::\n"
 
 
             printf "::group::With empty buildinfo (fails)\n"
+            ls -lah
             touch ./contents ./buildinfo
 
             /usr/sbin/pkg_create \
@@ -34,12 +37,14 @@ jobs:
               -d -"My description" \
               -f ./contents \
               my-package.tgz
-
+            ls -lah
+            
             rm ./contents ./buildinfo ./my-package.tgz
             printf "::endgroup::\n"
 
 
             printf "::group::With non-empty buildinfo (fails)\n"
+            ls -lah
             touch ./contents
             printf "MACHINE_ARCH=%s\n" "$(uname -p)"             > "./buildinfo"
             printf "OPSYS=%s\n" "$(uname)"                      >> "./buildinfo"
@@ -52,6 +57,7 @@ jobs:
               -d -"My description" \
               -f ./contents \
               my-package.tgz
+            ls -lah
 
             rm ./contents ./buildinfo ./my-package.tgz
             printf "::endgroup::\n"
