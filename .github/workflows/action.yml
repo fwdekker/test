@@ -5,10 +5,11 @@ jobs:
     steps:
       - uses: vmactions/netbsd-vm@main
         with:
+          sync: no
+          prepare: |
+            /usr/sbin/pkg_add curl
           run: |
             set -e
-
-            /usr/sbin/pkg_add curl
 
             printf "::group::Without buildinfo (works fine)\n"
             ls -lah
