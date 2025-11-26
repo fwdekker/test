@@ -1,13 +1,14 @@
 on: [push]
 jobs:
   netbsd-job:
+    strategy:
+      matrix:
+        sync: ["no", "rsync", "sshfs", "scp"]
     runs-on: ubuntu-latest
     steps:
       - uses: vmactions/netbsd-vm@main
         with:
-          sync: no
-          prepare: |
-            /usr/sbin/pkg_add curl
+          sync: ${{ matrix.sync }}
           run: |
             set -e
 
