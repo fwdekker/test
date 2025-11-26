@@ -3,9 +3,15 @@ jobs:
   netbsd-job:
     runs-on: ubuntu-latest
     steps:
-      - uses: vmactions/netbsd-vm@v1
+      - uses: vmactions/netbsd-vm@main
         with:
+          sync: no
+          release: "10.1"
+          prepare: |
+            /usr/sbin/pkg_add curl
           run: |
+            set -e
+
             printf "::group::Without buildinfo (works fine)\n"
             touch ./contents
 
