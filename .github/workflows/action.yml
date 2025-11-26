@@ -1,21 +1,19 @@
-on: workflow_dispatch
-
+on: [push]
 jobs:
-  my-task:
-    runs-on: ubuntu-latest
+  netbsd-job:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Reset version number and changelog
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: |
-          sed -i "s/version=.*/version=9.9.9-unreleased/" gradle.properties
-          sed -i "s/# Changelog/# Changelog\n## 9.9.9-unreleased\n### Added\n### Changed\n### Deprecated\n### Removed\n### Fixed\n### Security\n\n/" CHANGELOG.md
+      - uses: vmactions/netbsd-vm@v1
+        with:
+          run: |
+            set -e
 
-          git config --global user.name "fwdekkerbot"
-          git config --global user.email "bot@fwdekker.com"
-          git add --all
-          git commit -m "Reset version number and changelog"
-               
-          git push origin main
+            touch packlist buildinfo
+
+            echo "::group::Without buildinfo"
+            /usr/sbin/pkg_create -c -comment -d -desc -f packlist pkg-name.tgz
+            echo "::endgroup::"
+
+            echo "::group::With buildinfo"
+            /usr/sbin/pkg_create -B ./buildinfo -c -comment -d -desc -f packlist pkg-name.tgz
+            echo "::endgroup::"
