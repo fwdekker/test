@@ -5,6 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
-    - uses: actions/checkout@v6
-    - name: Setup upterm session
-      uses: owenthereal/action-upterm@v1
+      - uses: actions/checkout@v6
+      - name: Breakpoint if tests failed
+        uses: namespacelabs/breakpoint-action@v0
+        with:
+          duration: 30m
+          authorized-users: fwdekker
