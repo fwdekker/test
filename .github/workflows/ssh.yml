@@ -3,7 +3,7 @@ on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: fedora:latest
+#    container: fedora:latest
     steps:
       - uses: actions/checkout@v6
       - name: Breakpoint if tests failed
